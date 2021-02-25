@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Picnic Time</title>
+    <style>
+        canvas {
+            background-color: lawngreen;
+            display: block;
+        }
+
+    </style>
+    <script>
+        "use strict";
+
+        var canvas;
+        var graphics;
+        var pixelSize;
+        var frameNumber = 0;
+
+        function draw() {
+            graphics.clearRect(0, 0, 1000, 750);
+            graphics.save();
+            applyWindowToViewportTransformation(0, 0, 1, 1, true);
+            drawScene();
+            graphic.restore();
+        }
+        
+        function drawScene() {
+            graphics.save();
+            drawSky();
+            drawSun();
+            drawLake();
+            drawTree();
+            drawTree2();
+            drawBlanket();
+            drawBird();
+            graphics.restore();
+        }
+        
+        function drawSky() {
+            graphics.save();
+            graphics.fillStyle = "skyblue";
+            graphics.fillRect(0, 0, 1000, 375);
+            graphics.restore();
+        }
+        
+        function drawSun() {
+            graphics.save();
+            graphics.fillStyle = "yellow";
+            graphics.globalAlpha = .2;
+            graphics.fillOval(800,10,140,140)
+            graphics.fillOval(800,10,120,120)
+            graphics.fillOval(800,10,100,100)
+            graphics.fillOval(800,10,80,80)
+            graphics.fillOval(800,10,60,60)
+            graphics.restore();
+        }
+        
+        function drawLake() {
+            graphics.save();
+            graphics.fillStyle = "blue";
+            graphics.beginPath();
+            graphics.moveTo(100,375);
+            graphics.lineTo(900,375);
+            graphics.quadraticCurveTo(700,550,500,550)
+            graphics.quadraticCurveTo(300,550,100,375)
+            graphics.closePath();
+            graphics.fill();
+            graphics.restore();
+        }
+        
+        function drawTree() {
+            graphics.save();
+            graphics.fillStyle = "saddlebrown";
+            graphics.beginPath();
+            graphics.moveTo(100,350);
+            graphics.quadraticCurveTo(100,600,25,650)
+            graphics.lineTo(100,600);
+            graphics.lineTo(125,650);
+            graphics.lineTo(150,600);
+            graphics.lineTo(200,650);
+            graphics.quadraticCurveTo(150,600,150,350);
+            graphics.closePath();
+            graphics.fill();
+            graphics.fillStyle = "green";
+            graphics.fillOval(125,350,125,125);
+            graphics.restore();
+        }
+        
+        function drawTree2() {
+            graphics.save();
+            graphics.fillStyle = "saddlebrown";
+            graphics.beginPath();
+            graphics.moveTo(900,350);
+            graphics.quadraticCurveTo(900,600,975,650)
+            graphics.lineTo(900,600);
+            graphics.lineTo(875,650);
+            graphics.lineTo(850,600);
+            graphics.lineTo(800,650);
+            graphics.quadraticCurveTo(850,600,850,350);
+            graphics.closePath();
+            graphics.fill();
+            graphics.fillStyle = "green";
+            graphics.fillOval(875,350,125,125);
+            graphics.restore();
+        }
+        
+        function drawBlanket() {
+            graphics.save();
+            graphics.fillStyle = "sandybrown"
+            graphics.transform(1,0,-1,1,0,0);
+            graphics.fillRect(1200,520,150,125);
+            graphics.restore();
+            graphics.save();
+            graphics.fillStyle = "red";
+            graphics.fillOval(675,550,10,10);
+            graphics.fillStyle = "gray";
+            graphics.fillRect(750,500,50,40);
+            graphics.strokeStyle = "gray";
+            graphics.strokeOval(775,500,20,20);
+            graphics.fillStyle = "white";
+            graphics.strokeStyle= "black";
+            graphics.fillOval(725,550,20,20);
+            graphics.strokeOval(725,550,20,20);
+            graphics.beginPath();
+            graphics.moveTo(710,565);
+            graphics.lineTo(675,600);
+            graphics.lineTo(650,600);
+            graphics.lineTo(675,625);
+            graphics.moveTo(700,575);
+            graphics.lineTo(675,575);
+            graphics.stroke();
+            graphics.restore();
+        }
+        
+        function drawBird() {
+            graphics.save();
+            graphics.strokeStyle = "black";
+            graphics.beginPath();
+            graphics.moveTo(500,150);
+            graphics.quadraticCurveTo(490,140,475,140);
+            graphics.moveTo(500,150);
+            graphics.quadraticCurveTo(510,140,525,140);
+            graphics.stroke();
+            graphics.restore();
+        }
+
+        function applyWindowToViewportTransformation(left, right, bottom, top, preserveAspect) {
+            var displayAspect, windowAspect;
+            var excess;
+            var pixelwidth, pixelheight;
+            if (preserveAspect) {
+                // Adjust the limits to match the aspect ratio of the drawing area.
+                displayAspect = Math.abs(canvas.height / canvas.width);
+                windowAspect = Math.abs((top - bottom) / (right - left));
+                if (displayAspect > windowAspect) {
+                    // Expand the viewport vertically.
+                    excess = (top - bottom) * (displayAspect / windowAspect - 1)
+                    top = top + excess / 2
+                    bottom = bottom - excess / 2
+                } else if (displayAspect < windowAspect) {
+                    // Expand the viewport vertically.
+                    excess = (right - left) * (windowAspect / displayAspect - 1)
+                    right = right + excess / 2
+                    left = left - excess / 2
+                }
+            }
+            graphics.scale(canvas.width / (right - left), canvas.height / (bottom - top))
+            graphics.translate(-left, -top);
+            pixelwidth = Math.abs((right - left) / canvas.width);
+            pixelheight = Math.abs((bottom - top) / canvas.height);
+            pixelSize = Math.max(pixelwidth, pixelheight);
+        } // end of applyWindowToViewportTransformation()
+
+        function addGraphicsContextExtras(graphics) {
+            graphics.strokeLine = function(x1, y1, x2, y2) {
+                this.beginPath();
+                this.moveTo(x1, y1);
+                this.lineTo(x2, y2);
+                this.stroke();
+            }
+            graphics.fillCircle = function(x, y, r) {
+                this.beginPath();
+                this.arc(x, y, r, 0, 2 * Math.PI, false);
+                this.fill();
+            }
+            graphics.strokeCircle = function(x, y, radius) {
+                this.beginPath();
+                this.arc(x, y, radius, 0, 2 * Math.PI, false);
+                this.stroke();
+            }
+            graphics.fillPoly = function() {
+                if (arguments.length < 6)
+                    return;
+                this.beginPath();
+                this.moveTo(arguments[0], arguments[1]);
+                for (var i = 2; i + 1 < arguments.length; i = i + 2) {
+                    this.lineTo(arguments[i], arguments[i + 1]);
+                }
+                this.closePath();
+                this.fill();
+            }
+            graphics.strokePoly = function() {
+                if (arguments.length < 4)
+                    return;
+                this.beginPath();
+                this.moveTo(arguments[0], arguments[1]);
+                for (var i = 2; i + 1 < arguments.length; i = i + 2) {
+                    this.lineTo(arguments[i], arguments[i + 1]);
+                }
+                this.closePath();
+                this.stroke();
+            }
+            graphics.fillOval = function(x, y, horizontalRadius, verticalRadius) {
+                this.save();
+                this.translate(x, y);
+                this.scale(horizontalRadius, verticalRadius);
+                this.beginPath();
+                this.arc(0, 0, 1, 0, 2 * Math.PI, false);
+                this.restore();
+                this.fill();
+            }
+            graphics.strokeOval = function(x, y, horizontalRadius, verticalRadius) {
+                this.save();
+                this.translate(x, y);
+                this.scale(horizontalRadius, verticalRadius);
+                this.beginPath();
+                this.arc(0, 0, 1, 0, 2 * Math.PI, false);
+                this.restore();
+                this.stroke();
+            }
+            graphics.getRGB = function(x, y) {
+                var color = this.getImageData(x, y, 1, 1);
+                return color.data;
+            }
+        } // end of addGraphicsContextExtras()
+
+        function doFrame() {
+            frameNumber++;
+            // YOU CAN ADD UPDATE OTHER DATA FOR THE FRAME HERE.
+            draw();
+            requestAnimationFrame(doFrame);
+        }
+
+        function init() {
+            try {
+                canvas = document.getElementById("canvas");
+                graphics = canvas.getContext("2d");
+            } catch (e) {
+                document.getElementById("canvasholder").innerHTML =
+                    "Canvas graphics is not supported.<br>" +
+                    "An error occurred while initializing graphics.";
+            }
+            addGraphicsContextExtras(graphics); // Add the extra features to the graphics context
+            draw(); // Call draw() to draw on the canvas.
+            if (!window.requestAnimationFrame) { // This is for Internet Explorer 9
+                window.requestAnimationFrame = function(callback) {
+                    setTimeout(callback, 1000 / 60);
+                }
+            }
+            requestAnimationFrame(doFrame);
+        }
+
+    </script>
+</head>
+
+<body onload="init()">
+    <noscript>
+        <p>JavaScript is required to use this page.</p>
+    </noscript>
+    <div id="canvasholder">
+        <canvas id="canvas" width="1000" height="750">
+            <!-- This message is shown on the page if the browser doesn't support the canvas element. -->
+            Canvas not supported.
+        </canvas>
+    </div>
+</body>
+
+</html>
