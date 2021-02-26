@@ -77,6 +77,12 @@ public class PicnicScene extends JPanel {
         g2.rotate(50);
         drawBlanket(g2);
         g2.setTransform(save);
+        g2.scale(0.4,0.4);
+        g2.translate(800,0);
+        drawBird(g2);
+        g2.translate(300,400);
+        drawBird(g2);
+        g2.setTransform(save);
         applyWindowToViewportTransformation(g2, -5, 10, -1, 14, true);
         drawScene(g2);
 
@@ -203,8 +209,8 @@ public class PicnicScene extends JPanel {
     private void drawBlanket(Graphics2D g2) {
         AffineTransform cs = g2.getTransform();
         g2.setPaint(Color.white);
-        g2.fill(new RoundRectangle2D.Double(400,750,200,175,1,1));
-        g2.setPaint(new Color(255, 30, 30, 170));
+        g2.fill(new RoundRectangle2D.Double(400,750,210,175,1,1));
+        g2.setPaint(new Color(255, 30, 30));
         g2.fill(new Rectangle2D.Double(400,750,10,175));
         g2.fill(new Rectangle2D.Double(425,750,10,175));
         g2.fill(new Rectangle2D.Double(450,750,10,175));
@@ -214,9 +220,28 @@ public class PicnicScene extends JPanel {
         g2.fill(new Rectangle2D.Double(550,750,10,175));
         g2.fill(new Rectangle2D.Double(575,750,10,175));
         g2.fill(new Rectangle2D.Double(600,750,10,175));
-        g2.setPaint(new Color(255, 30, 30, 125));
+        g2.setPaint(new Color(255, 30, 30, 120));
         g2.fill(new Rectangle2D.Double(400,750,200,10));
-        g2.fill(new Rectangle2D.Double(400,750,200,10));
+        g2.fill(new Rectangle2D.Double(400,775,200,10));
+        g2.fill(new Rectangle2D.Double(400,800,200,10));
+        g2.fill(new Rectangle2D.Double(400,825,200,10));
+        g2.fill(new Rectangle2D.Double(400,850,200,10));
+        g2.fill(new Rectangle2D.Double(400,875,200,10));
+        g2.fill(new Rectangle2D.Double(400,900,200,10));
+        g2.fill(new Rectangle2D.Double(400,920,200,10));
+        g2.setPaint(new Color(87, 35, 0));
+        g2.rotate(-50);
+        g2.fill(new RoundRectangle2D.Double(770,630,100,70,20,20));
+        g2.setStroke(new BasicStroke(8));
+        g2.draw(new QuadCurve2D.Double(780,630,830,570,860,630));
+        g2.setTransform(cs);
+    }
+    private void drawBird(Graphics2D g2) {
+        AffineTransform cs = g2.getTransform();
+        g2.setPaint(new Color(14, 0, 2));
+        g2.setStroke(new BasicStroke(6));
+        g2.draw(new QuadCurve2D.Double(100,400,150,350,200,400));
+        g2.draw(new QuadCurve2D.Double(200,400,250,350,300,400));
         g2.setTransform(cs);
     }
     private void drawCloud(Graphics2D g2) {
