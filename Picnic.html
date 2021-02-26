@@ -47,7 +47,16 @@
             drawLake();
             drawTree();
             drawTree2();
-            drawBlanket(); 
+            drawSeeSawBase();
+            
+            {
+                graphics.save();
+
+                drawSeeSaw();
+                graphics.restore();
+            }
+            drawBlanket();
+            
             {
                 graphics.save();
                 var dx = (frameNumber + 10)*.05;
@@ -57,6 +66,7 @@
                 drawBird();
                 graphics.restore();
             }
+           
         }
 
         function drawSky() {
@@ -170,6 +180,27 @@
             if (wing < wingEnd || wing > wingStart){
                 wingt = -wingt;
             }
+        }
+        
+        function drawSeeSaw() {
+            graphics.save();
+            graphics.fillStyle="purple";
+            graphics.moveTo(350,650);
+            graphics.rotate(frameNumber * Math.PI / 180);
+            graphics.fillRect(200,625,300,25);
+            graphics.restore();
+        }
+        
+        function drawSeeSawBase() {
+            graphics.save();
+            graphics.fillStyle="green";
+            graphics.beginPath;
+            graphics.moveTo(350,650);
+            graphics.lineTo(300,700);
+            graphics.lineTo(400,700);
+            graphics.closePath();
+            graphics.fill();
+            graphics.restore();
         }
 
         function applyWindowToViewportTransformation(left, right, bottom, top, preserveAspect) {
