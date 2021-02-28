@@ -49,6 +49,7 @@ public class PicnicScene extends JPanel {
 
     protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g.create();
+        //double dx = ((frameNumber+150)%600)*0.05;  // The mod helps it "wrap" around
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2.setPaint(new Color(51,204,255));
         g2.fillRect(0,0,getWidth(),getHeight());
@@ -62,7 +63,7 @@ public class PicnicScene extends JPanel {
         drawTree(g2);
         g2.setTransform(save);
         //Drawing the sun
-        g2.setPaint(new Color(203, 178, 5));
+        /*g2.setPaint(new Color(203, 178, 5));
         //g2.scale(scale, scale);
         g2.fill(new Ellipse2D.Double(600, 13, 100, 100));
         g2.setTransform(save);
@@ -73,7 +74,9 @@ public class PicnicScene extends JPanel {
         g2.setPaint(new Color(203, 178, 5,150));
         //g2.scale(scale, scale);
         g2.fill(new Ellipse2D.Double(600-25, -7, 150, 150));
-        g2.setTransform(save);
+        g2.setTransform(save);*/
+        drawSun(g2);
+
         g2.rotate(50);
         drawBlanket(g2);
         g2.setTransform(save);
@@ -181,10 +184,14 @@ public class PicnicScene extends JPanel {
 
         g2.setTransform(cs);       // Restore previous C.S. state
     }
-    /*
+
     private void drawSun(Graphics2D g2){
         // A "sun"
-        double size = 1.5;
+        //double size = 1.5;
+        int maxFrameNum = 20;
+        //AnimationTimer timer = new AnimationTimer();
+        //timer.start();
+        double dx = ((frameNumber+10)%50)*0.05;
 
         AffineTransform cs = g2.getTransform();
         int sunHeight = 10;
@@ -193,19 +200,46 @@ public class PicnicScene extends JPanel {
         g2.scale(scale, scale);
         g2.setTransform(cs);
         g2.setPaint(new Color(203, 178, 5,200));
-        g2.fill(new Ellipse2D.Double(600-12, sunHeight-1, 125, 125));
+        Ellipse2D ring1 = new Ellipse2D.Double(600-12, sunHeight-1, 125-dx, 125-dx);
+        g2.fill(ring1);
         g2.scale(scale, scale);
         g2.setTransform(cs);
         g2.setPaint(new Color(203, 178, 5,150));
-        g2.fill(new Ellipse2D.Double(600-25, sunHeight-12, 150, 150));
+        //g2.setPaint(Color.black);
+        Ellipse2D ring2 = new Ellipse2D.Double(600-25, sunHeight-12, 150+dx, 150+dx);
+        g2.fill(ring2);
         g2.scale(scale, scale);
         g2.setTransform(cs);
+        g2.setPaint(new Color(203, 178, 5,100));
+        Ellipse2D ring3 = new Ellipse2D.Double(600-38, sunHeight-23, 175-dx, 175-dx);
+        g2.fill(ring3);
+        g2.scale(scale, scale);
+        g2.setTransform(cs);
+        g2.setPaint(new Color(203, 178, 5,50));
+        double size = 10;
+        //boolean isGrowing = true;
+        Ellipse2D ring4 = new Ellipse2D.Double();
+        ring4.setFrame((600 - 51), (sunHeight - 34), 200 + dx, 200+dx);
+        g2.fill(ring4);
+        g2.scale(scale, scale);
+        g2.setTransform(cs);
+        //isGrowing = false;
+        Ellipse2D ring5 = new Ellipse2D.Double();
+        ring5.setFrame((600 - 64), (sunHeight - 45), 225 - dx, 225-dx);
+        g2.fill(ring5);
+        g2.scale(scale, scale);
+        g2.setTransform(cs);
+
+
+
+
+
 
         // lower left X, lower left Y, width, height
 
     }
 
-     */
+
     private void drawBlanket(Graphics2D g2) {
         AffineTransform cs = g2.getTransform();
         g2.setPaint(Color.white);
@@ -238,10 +272,11 @@ public class PicnicScene extends JPanel {
     }
     private void drawBird(Graphics2D g2) {
         AffineTransform cs = g2.getTransform();
+        double dx = ((frameNumber+150)%600)*0.05;  // The mod helps it "wrap" around
         g2.setPaint(new Color(14, 0, 2));
         g2.setStroke(new BasicStroke(6));
-        g2.draw(new QuadCurve2D.Double(100,400,150,350,200,400));
-        g2.draw(new QuadCurve2D.Double(200,400,250,350,300,400));
+        g2.draw(new QuadCurve2D.Double(100,400,150,350+dx,200,400));
+        g2.draw(new QuadCurve2D.Double(200,400,250,350+dx,300,400));
         g2.setTransform(cs);
     }
     private void drawCloud(Graphics2D g2) {
