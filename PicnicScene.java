@@ -62,10 +62,7 @@ public class PicnicScene extends JPanel {
         AffineTransform save = g2.getTransform();
         //applyWindowToViewportTransformation(g2, -5, 10, -1, 14, true);
        // drawScene(g2);
-        drawTree(g2);
-        g2.translate(600, 0);
-        drawTree(g2);
-        g2.setTransform(save);
+
         //Drawing the sun
         /*g2.setPaint(new Color(203, 178, 5));
         //g2.scale(scale, scale);
@@ -80,11 +77,28 @@ public class PicnicScene extends JPanel {
         g2.fill(new Ellipse2D.Double(600-25, -7, 150, 150));
         g2.setTransform(save);*/
         drawSun(g2);
-        double dx = ((frameNumber+150)%600)*0.05;  // The mod helps it "wrap" around
+        double dx = ((frameNumber+10)%1500)*0.05;  // The mod helps it "wrap" around
 
-        g2.rotate(50);
-        drawBlanket(g2);
+
+
+        //AffineTransform save = g2.getTransform();
+
+
+
+        //draw clouds
+        g2.setPaint(new Color(240, 240, 240, 200));
+        //double dx = ((frameNumber+150)%600)*0.05;  // The mod helps it "wrap" around
+        g2.translate(500-dx, 150);  // Move it up and over with the framenumber used for animation...
+        drawCloud(g2);
         g2.setTransform(save);
+        g2.translate(0-dx, 50);  // Move it up and over with the framenumber used for animation...
+        drawCloud(g2);
+        g2.setTransform(save);
+        g2.translate(-500-dx, 100);  // Move it up and over with the framenumber used for animation...
+        drawCloud(g2);
+        g2.setTransform(save);
+
+        //draw birds
         g2.scale(0.4,0.4);
         g2.translate(800+dx,0);
         drawBird(g2);
@@ -93,9 +107,15 @@ public class PicnicScene extends JPanel {
         g2.setTransform(save);
 
 
-        //AffineTransform save = g2.getTransform();
+        //draw trees
+        drawTree(g2);
+        g2.translate(600, 0);
+        drawTree(g2);
+        g2.setTransform(save);
+
+        //draw sunflowers
         g2.translate(getWidth()/2+350, getHeight()/2+210);
-        g2.scale(7, 7);    // Scale these flowers down! But they are still HUGE!!!
+        g2.scale(7, 7);
         g2.rotate(Math.toRadians(180));
         double[] heights = { 4.0, 6.0, 3.0, 4.5, 5.5 };
         int[] petals = {10, 15, 8, 7, 12};
@@ -107,24 +127,24 @@ public class PicnicScene extends JPanel {
         drawSunflowerGarden(g2, heights, petals);
         g2.setTransform(save);
 
-
-        //AffineTransform save = g2.getTransform();
-        g2.setPaint(new Color(240, 240, 240, 200));
-        //double dx = ((frameNumber+150)%600)*0.05;  // The mod helps it "wrap" around
-        g2.translate(15-dx, 12);  // Move it up and over with the framenumber used for animation...
-        drawCloud(g2);
-        g2.setTransform(save);
-        g2.translate(20-dx, 10);  // Move it up and over with the framenumber used for animation...
-        drawCloud(g2);
-        g2.setTransform(save);
-        g2.translate(30-dx, 11);  // Move it up and over with the framenumber used for animation...
-        drawCloud(g2);
+        //draw blanket & basket
+        g2.rotate(50);
+        g2.translate(-100,0);
+        drawBlanket(g2);
         g2.setTransform(save);
 
     }
 
 
+    private void drawSeesaw(Graphics2D g2)
+    {
+        AffineTransform cs = g2.getTransform();
+        g2.setColor(Color.black);
+        int width = getWidth();
+        int height = getHeight();
 
+
+    }
     private void drawSunflowerGarden(Graphics2D g2, double[] height, int[] petals) {
         AffineTransform cs = g2.getTransform();  // Save C.S. state
         assert(height.length == petals.length);
@@ -268,7 +288,9 @@ public class PicnicScene extends JPanel {
     }
     private void drawBird(Graphics2D g2) {
         AffineTransform cs = g2.getTransform();
-        double dx = ((frameNumber+1000)%600)*0.05;  // The mod helps it "wrap" around
+        double dx = ((frameNumber+50)%600)*0.05;
+        //double dx = ((frameNumber+10)%50)*0.05;
+
         g2.setPaint(new Color(14, 0, 2));
         g2.setStroke(new BasicStroke(6));
         g2.draw(new QuadCurve2D.Double(100,400,150,350+dx,200,400));
