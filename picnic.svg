@@ -1,0 +1,140 @@
+<?xml version="1.0"?>
+<!DOCTYPE svg>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" 
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        width="400px" height="400px" 
+        viewBox="0 0 400 400"
+        preserveAspectRatio="xMidYMid">
+  
+    
+    <rect x="0" y="200" width="400" height="200" fill="#03fc62"/> 
+     
+     <ellipse cx="200" cy="200" rx="150" ry="100"
+  style="fill:blue" />
+  <rect x="0" y="0" width="400" height="200" fill="#03f4fc"/> 
+  
+  
+  <rect x="565" y="290" width="60" height="75" fill="#e8cd82" transform="skewX(-45)"/> <!-- Blanket  -->
+
+  <path d="M302 285, C305 280 , 310 280 , 313 285" fill="transparent" stroke="brown"/><!--Picnic Basket handel-->
+  <rect x="300" y="285" width="15" height="9" fill="brown"/> <!-- Picnic basket box  -->
+
+  <path d="M 295 310, 275 330, 260 330, 255 340" stroke="black" fill="transparent"/><!-- Stick figure's body(Blanket)  -->
+  <path d="M 285 320, 270 320" stroke="black" fill="transparent"/><!-- Stick figure's arm(Blanket)  -->
+  <circle cx="295" cy="310" r="8" fill="white" stroke="black" stroke-width="1" /><!-- Stick figure's head(Blanket)  -->
+
+  <circle cx="270" cy="310" r="2" fill="red"/><!-- Apple  -->
+
+  <path d="M360 200, C370 350, 400 390, 400 390, L375 350, L360 390, L350 360, L300 390, C290 390, 330 390, 340 200" fill="brown" /><!-- Right Tree Bark  -->
+  <path d="M60 200, C70 350, 100 390, 100 390, L75 350, L60 390, L50 360, L0 390, C-10 390, 30 390, 40 200" fill="brown" /><!-- Left Tree Bark -->
+  <circle cx="50" cy="180" r="60" fill="green" /><!-- Left Tree Leaves  -->
+  <circle cx="350" cy="180" r="60" fill="green" /><!-- Right Tree Leaves  -->
+
+  <rect x="47.5" y="340" width="150" height="5" fill="magenta">
+  <animateTransform
+            attributeName="transform"
+            begin="0s"
+            dur="5s"
+            type="rotate"
+            values="-10 125 340;10 125 340;-10 125 340;"
+            repeatCount="indefinite"
+        />
+  </rect> <!-- Seasaw  -->
+
+
+  <path d="M 125 345, l 30 30, l -60 0" fill="green"/><!-- Triangle for seasaw  --> 
+
+  <path d="M 60 320, 75 340" fill="transparent" stroke="black">
+  <animate
+      attributeName="d"
+      dur="5s"
+      values="M 60 330, 75 349; M 60 310, 75 332; M 60 330, 75 349;"
+      repeatCount="indefinite"/>
+      </path><!-- Stick figure left arm -->
+  <path d="M 60 300, 60 340, 65 360, 55 370" fill="transparent" stroke="black">
+  <animate
+      attributeName="d"
+      dur="5s"
+      values="M 60 310, 60 350, 65 365, 55 375; M 60 290, 60 330, 62 345, 55 358; M 60 310, 60 350, 65 365, 55 375;"
+      repeatCount="indefinite"/>
+      </path><!-- Stick figure left body/legs -->
+  
+  <circle cx="60" cy="300" r="12" fill="white" stroke="black" stroke-width="2" >
+  <animate
+      attributeName="cy"
+      dur="5s"
+      values="310;290;310"
+      repeatCount="indefinite"/>
+  </circle><!-- Stick figure left head  -->
+
+  <path d="M 188 320, 173 340" fill="transparent" stroke="black">
+  <animate
+      attributeName="d"
+      dur="5s"
+      values="M 188 310, 173 332; M 188 330, 173 349; M 188 310, 173 332;"
+      repeatCount="indefinite"/>
+      </path><!-- Stick figure right arm -->
+
+
+  <path d="M 188 300, 188 340, 183 360, 193 370" fill="transparent" stroke="black">
+  <animate
+      attributeName="d"
+      dur="5s"
+      values="M 188 290, 188 330, 187 345, 193 358; M 188 310, 188 350, 183 365, 193 375; M 188 290, 188 330, 187 345, 193 358;"
+      repeatCount="indefinite"/>
+      </path><!-- Stick figure right body/legs -->
+
+
+
+  <circle cx="188" cy="300" r="12" fill="white" stroke="black" stroke-width="2" >
+  <animate
+      attributeName="cy"
+      dur="5s"
+      values="290;310;290"
+      repeatCount="indefinite"/>
+  </circle><!-- Stick figure right head  -->
+
+   <path d="M200,100 C205,90  215,90  220,100" fill="transparent" stroke="black">
+   <animate
+      attributeName="d"
+      dur="4s"
+      values="M400,100 C405,90  415,90  420,100; 
+            M350,100 C355,110  365,110  370,100;
+            M300,100 C305,90  315,90  320,100; 
+            M250,100 C255,110  265,110  270,100;
+            M200,100 C205,90  215,90  220,100;
+            M150,100 C155,110  165,110  170,100;
+            M100,100 C105,90  115,90  120,100;
+            M50,100 C55,110  65,110  70,100;
+            M0,100 C5,90  15,90  20,100;
+            M-50,100 C-5,110  -35,110  -30,100;"
+      repeatCount="indefinite"/>
+        </path><!--Bird arc 1-->
+
+   <path d="M220,100 C225,90  235,90  240,100" fill="transparent" stroke="black">
+    <animate
+      attributeName="d"
+      dur="4s"
+      values="M420,100 C425,90  435,90  440,100; 
+            M370,100 C375,110  385,110  390,100;
+            M320,100 C325,90  335,90  340,100; 
+            M270,100 C275,110  285,110  290,100;
+            M220,100 C225,90  235,90  240,100; 
+            M170,100 C175,110  185,110  190,100;
+            M120,100 C125,90  135,90  140,100; 
+            M70,100 C75,110  85,110  90,100;
+            M20,100 C25,90  35,90  40,100;
+            M-30,100 C-25,110  -15,110  -10,100;"
+      repeatCount="indefinite"/>
+
+    </path><!--Bird arc 2-->
+
+
+   <circle cx="320" cy="0" r="60" fill="yellow" opacity=".2"/><!-- Sun circles  -->
+   <circle cx="320" cy="0" r="50" fill="yellow" opacity=".4"/><!-- Sun circles  -->
+   <circle cx="320" cy="0" r="40" fill="yellow" opacity=".6"/><!-- Sun circles  -->
+   <circle cx="320" cy="0" r="30" fill="yellow" opacity=".8"/><!-- Sun circles  -->
+   <circle cx="320" cy="0" r="20" fill="yellow" opacity="1"/><!-- Sun circles  -->
+  
+     
+</svg>
