@@ -50,7 +50,9 @@ public class PicnicScene extends JPanel {
     protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g.create();
         //double dx = ((frameNumber+150)%600)*0.05;  // The mod helps it "wrap" around
+
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
         g2.setPaint(new Color(51,204,255));
         g2.fillRect(0,0,getWidth(),getHeight());
         g2.setPaint(new Color(70, 255, 8));
@@ -58,6 +60,8 @@ public class PicnicScene extends JPanel {
         g2.setPaint(Color.blue);
         g2.fill(new QuadCurve2D.Double(200,400,500,700,800,400));
         AffineTransform save = g2.getTransform();
+        //applyWindowToViewportTransformation(g2, -5, 10, -1, 14, true);
+       // drawScene(g2);
         drawTree(g2);
         g2.translate(600, 0);
         drawTree(g2);
@@ -76,59 +80,51 @@ public class PicnicScene extends JPanel {
         g2.fill(new Ellipse2D.Double(600-25, -7, 150, 150));
         g2.setTransform(save);*/
         drawSun(g2);
+        double dx = ((frameNumber+150)%600)*0.05;  // The mod helps it "wrap" around
 
         g2.rotate(50);
         drawBlanket(g2);
         g2.setTransform(save);
         g2.scale(0.4,0.4);
-        g2.translate(800,0);
+        g2.translate(800+dx,0);
         drawBird(g2);
-        g2.translate(300,400);
+        g2.translate(300+dx,400);
         drawBird(g2);
         g2.setTransform(save);
-        applyWindowToViewportTransformation(g2, -5, 10, -1, 14, true);
-        drawScene(g2);
+
+
+        //AffineTransform save = g2.getTransform();
+        g2.translate(getWidth()/2+350, getHeight()/2+210);
+        g2.scale(7, 7);    // Scale these flowers down! But they are still HUGE!!!
+        g2.rotate(Math.toRadians(180));
+        double[] heights = { 4.0, 6.0, 3.0, 4.5, 5.5 };
+        int[] petals = {10, 15, 8, 7, 12};
+        drawSunflowerGarden(g2, heights, petals);
+        g2.setTransform(save);
+        g2.translate(getWidth()/2-250, getHeight()/2+210);
+        g2.scale(7, 7);
+        g2.rotate(Math.toRadians(180));
+        drawSunflowerGarden(g2, heights, petals);
+        g2.setTransform(save);
+
+
+        //AffineTransform save = g2.getTransform();
+        g2.setPaint(new Color(240, 240, 240, 200));
+        //double dx = ((frameNumber+150)%600)*0.05;  // The mod helps it "wrap" around
+        g2.translate(15-dx, 12);  // Move it up and over with the framenumber used for animation...
+        drawCloud(g2);
+        g2.setTransform(save);
+        g2.translate(20-dx, 10);  // Move it up and over with the framenumber used for animation...
+        drawCloud(g2);
+        g2.setTransform(save);
+        g2.translate(30-dx, 11);  // Move it up and over with the framenumber used for animation...
+        drawCloud(g2);
+        g2.setTransform(save);
 
     }
-    private void drawScene(Graphics2D g2) {
-        AffineTransform cs = g2.getTransform();
-        g2.scale(1,1);
-        drawMainScene(g2);
-    }
 
-    private void drawMainScene(Graphics2D g2) {
 
-        // A group of sunflowers
-        {
-            AffineTransform save = g2.getTransform();
-            g2.translate(7, 3);
-            g2.scale(0.2, 0.2);    // Scale these flowers down! But they are still HUGE!!!
-            double[] heights = { 4.0, 6.0, 3.0, 4.5, 5.5 };
-            int[] petals = {10, 15, 8, 7, 12};
-            drawSunflowerGarden(g2, heights, petals);
-            g2.setTransform(save);
-            g2.translate(-5, 3);
-            g2.scale(0.2, 0.2);
-            drawSunflowerGarden(g2, heights, petals);
-            g2.setTransform(save);
-        }
 
-        // Draw cloud over the sun but moving left
-        {
-            AffineTransform save = g2.getTransform();
-            g2.setPaint(new Color(240, 240, 240, 200));
-            double dx = ((frameNumber+150)%600)*0.05;  // The mod helps it "wrap" around
-            g2.translate(15-dx, 12);  // Move it up and over with the framenumber used for animation...
-            drawCloud(g2);
-            g2.setTransform(save);
-            g2.translate(20-dx, 10);  // Move it up and over with the framenumber used for animation...
-            drawCloud(g2);
-            g2.setTransform(save);
-            g2.translate(30-dx, 11);  // Move it up and over with the framenumber used for animation...
-            drawCloud(g2);
-            g2.setTransform(save);
-        }
-    }
     private void drawSunflowerGarden(Graphics2D g2, double[] height, int[] petals) {
         AffineTransform cs = g2.getTransform();  // Save C.S. state
         assert(height.length == petals.length);
@@ -272,7 +268,7 @@ public class PicnicScene extends JPanel {
     }
     private void drawBird(Graphics2D g2) {
         AffineTransform cs = g2.getTransform();
-        double dx = ((frameNumber+150)%600)*0.05;  // The mod helps it "wrap" around
+        double dx = ((frameNumber+1000)%600)*0.05;  // The mod helps it "wrap" around
         g2.setPaint(new Color(14, 0, 2));
         g2.setStroke(new BasicStroke(6));
         g2.draw(new QuadCurve2D.Double(100,400,150,350+dx,200,400));
@@ -282,6 +278,9 @@ public class PicnicScene extends JPanel {
     private void drawCloud(Graphics2D g2) {
         AffineTransform cs = g2.getTransform();  // Save C.S. state
         Path2D cloud = new Path2D.Double();
+        int sunHeight = 10;
+        int width = getWidth();
+        int height = getHeight();
         cloud.moveTo(64, 112);                   // These coordinates were used because that was the frame
         cloud.curveTo(32, 144, 0, 48, 64, 64);   // of reference when I drew them in a separate drawing program!
         cloud.curveTo(32, 16, 112, 16, 112, 64);
@@ -290,8 +289,8 @@ public class PicnicScene extends JPanel {
         cloud.curveTo(240, 192, 64, 192, 112, 128);
         cloud.curveTo(96, 160, 48, 144, 64, 112);
         cloud.closePath();
-        g2.scale(0.02, 0.02);
-        g2.translate(-100, -100);
+        g2.scale(0.9, 0.9);
+        g2.translate(width/2, sunHeight-5);
         g2.fill(cloud);
         g2.setTransform(cs);
     }
