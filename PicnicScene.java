@@ -49,7 +49,7 @@ public class PicnicScene extends JPanel {
 
     protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g.create();
-        //double dx = ((frameNumber+150)%600)*0.05;  // The mod helps it "wrap" around
+        int y = getWidth();
 
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
@@ -60,34 +60,11 @@ public class PicnicScene extends JPanel {
         g2.setPaint(Color.blue);
         g2.fill(new QuadCurve2D.Double(200,400,500,700,800,400));
         AffineTransform save = g2.getTransform();
-        //applyWindowToViewportTransformation(g2, -5, 10, -1, 14, true);
-       // drawScene(g2);
-
-        //Drawing the sun
-        /*g2.setPaint(new Color(203, 178, 5));
-        //g2.scale(scale, scale);
-        g2.fill(new Ellipse2D.Double(600, 13, 100, 100));
-        g2.setTransform(save);
-        g2.setPaint(new Color(203, 178, 5,200));
-        //g2.scale(scale, scale);
-        g2.fill(new Ellipse2D.Double(600-12, 3, 125, 125));
-        g2.setTransform(save);
-        g2.setPaint(new Color(203, 178, 5,150));
-        //g2.scale(scale, scale);
-        g2.fill(new Ellipse2D.Double(600-25, -7, 150, 150));
-        g2.setTransform(save);*/
         drawSun(g2);
-        double dx = ((frameNumber+10)%1500)*0.05;  // The mod helps it "wrap" around
-
-
-
-        //AffineTransform save = g2.getTransform();
-
-
+        double dx = ((frameNumber+10)%y)*0.05;  // The mod helps it "wrap" around
 
         //draw clouds
         g2.setPaint(new Color(240, 240, 240, 200));
-        //double dx = ((frameNumber+150)%600)*0.05;  // The mod helps it "wrap" around
         g2.translate(500-dx, 150);  // Move it up and over with the framenumber used for animation...
         drawCloud(g2);
         g2.setTransform(save);
@@ -133,18 +110,50 @@ public class PicnicScene extends JPanel {
         drawBlanket(g2);
         g2.setTransform(save);
 
+        //draw seesaw
+        drawSeesaw(g2);
+        g2.setTransform(save);
+
     }
 
 
     private void drawSeesaw(Graphics2D g2)
     {
         AffineTransform cs = g2.getTransform();
-        g2.setColor(Color.black);
+        g2.setColor(new Color(66, 93,29));
         int width = getWidth();
         int height = getHeight();
 
+        //seesaw base
+        int [] xNums = {320, 280, 360};
+        int [] yNums = {670, 740, 740};
+        int nPoints = 3;
+        g2.fillPolygon(xNums, yNums, nPoints);
+        g2.setTransform(cs);
+
+        //seesaw line
+        g2.setColor(new Color(184, 46, 193));
+        g2.setStroke(new BasicStroke(10f));
+        g2.drawLine(190, 730, 430, 620);
+        g2.setTransform(cs);
+
+        //person one
+        g2.translate(-100,-100);
+        g2.rotate(Math.toRadians(-40));
+        g2.translate(-600,25);
+        drawPerson(g2);
+        g2.setTransform(cs);
+
+        //second person on seesaw
+        g2.translate(-50,-100);
+        g2.rotate(Math.toRadians(-40));
+        g2.translate(-810,-55);
+        drawPerson2(g2);
+        g2.setTransform(cs);
 
     }
+
+    //sunflower used from in class demo
     private void drawSunflowerGarden(Graphics2D g2, double[] height, int[] petals) {
         AffineTransform cs = g2.getTransform();  // Save C.S. state
         assert(height.length == petals.length);
@@ -154,6 +163,8 @@ public class PicnicScene extends JPanel {
         }
         g2.setTransform(cs);  // And restore it...
     }
+
+    //sunflower used from in class demo
     private void drawSunflower(Graphics2D g2, double height, int numPetals) {
         AffineTransform cs = g2.getTransform();  // Save C.S. state
         g2.setColor(new Color(0, 150, 0));  // Dark green
@@ -202,11 +213,8 @@ public class PicnicScene extends JPanel {
     }
 
     private void drawSun(Graphics2D g2){
-        // A "sun"
-        //double size = 1.5;
+
         int maxFrameNum = 20;
-        //AnimationTimer timer = new AnimationTimer();
-        //timer.start();
         double dx = ((frameNumber+10)%50)*0.05;
 
         AffineTransform cs = g2.getTransform();
@@ -221,7 +229,6 @@ public class PicnicScene extends JPanel {
         g2.scale(scale, scale);
         g2.setTransform(cs);
         g2.setPaint(new Color(203, 178, 5,150));
-        //g2.setPaint(Color.black);
         Ellipse2D ring2 = new Ellipse2D.Double(600-25, sunHeight-12, 150+dx, 150+dx);
         g2.fill(ring2);
         g2.scale(scale, scale);
@@ -233,25 +240,17 @@ public class PicnicScene extends JPanel {
         g2.setTransform(cs);
         g2.setPaint(new Color(203, 178, 5,50));
         double size = 10;
-        //boolean isGrowing = true;
         Ellipse2D ring4 = new Ellipse2D.Double();
         ring4.setFrame((600 - 51), (sunHeight - 34), 200 + dx, 200+dx);
         g2.fill(ring4);
         g2.scale(scale, scale);
         g2.setTransform(cs);
-        //isGrowing = false;
         Ellipse2D ring5 = new Ellipse2D.Double();
         ring5.setFrame((600 - 64), (sunHeight - 45), 225 - dx, 225-dx);
         g2.fill(ring5);
         g2.scale(scale, scale);
         g2.setTransform(cs);
 
-
-
-
-
-
-        // lower left X, lower left Y, width, height
 
     }
 
@@ -285,26 +284,66 @@ public class PicnicScene extends JPanel {
         g2.setStroke(new BasicStroke(8));
         g2.draw(new QuadCurve2D.Double(780,630,830,570,860,630));
         g2.setTransform(cs);
+        drawPerson(g2);
+        g2.setTransform(cs);
     }
+
+    private void drawPerson(Graphics2D g2){
+        AffineTransform cs = g2.getTransform();
+        Ellipse2D head = new Ellipse2D.Double(520, 780, 40, 40);
+        g2.setColor(Color.black);
+        g2.setStroke(new BasicStroke(4));
+        g2.setColor(Color.black);
+        g2.drawLine(540, 800, 490, 850); //body
+        g2.drawLine(510, 830, 485, 835); //arm
+        g2.drawLine(490, 850, 460, 845); //leg
+        g2.drawLine(460, 845, 455, 870); //lower leg
+        g2.setTransform(cs);
+
+        g2.draw(head);
+        g2.setColor(Color.white);
+        g2.fill(head);
+        g2.setTransform(cs);
+
+    }
+    private void drawPerson2(Graphics2D g2){
+        AffineTransform cs = g2.getTransform();
+        Ellipse2D head = new Ellipse2D.Double(520, 780, 40, 40);
+        g2.setColor(Color.black);
+        g2.setStroke(new BasicStroke(4));
+        g2.setColor(Color.black);
+        g2.drawLine(540, 800, 490, 850); //body
+        g2.drawLine(510, 830, 535, 835); //arm
+        g2.drawLine(490, 850, 530, 860); //leg
+        g2.drawLine(530, 860, 500, 880); //lower leg
+        g2.setTransform(cs);
+
+        g2.draw(head);
+        g2.setColor(Color.white);
+        g2.fill(head);
+        g2.setTransform(cs);
+
+    }
+
     private void drawBird(Graphics2D g2) {
         AffineTransform cs = g2.getTransform();
         double dx = ((frameNumber+50)%600)*0.05;
-        //double dx = ((frameNumber+10)%50)*0.05;
-
         g2.setPaint(new Color(14, 0, 2));
         g2.setStroke(new BasicStroke(6));
         g2.draw(new QuadCurve2D.Double(100,400,150,350+dx,200,400));
         g2.draw(new QuadCurve2D.Double(200,400,250,350+dx,300,400));
         g2.setTransform(cs);
     }
+
+    //clouds used from in class demo
     private void drawCloud(Graphics2D g2) {
         AffineTransform cs = g2.getTransform();  // Save C.S. state
         Path2D cloud = new Path2D.Double();
         int sunHeight = 10;
         int width = getWidth();
         int height = getHeight();
-        cloud.moveTo(64, 112);                   // These coordinates were used because that was the frame
-        cloud.curveTo(32, 144, 0, 48, 64, 64);   // of reference when I drew them in a separate drawing program!
+        cloud.moveTo(64, 112);
+        cloud.curveTo(32, 144, 0, 48, 64, 64);
         cloud.curveTo(32, 16, 112, 16, 112, 64);
         cloud.curveTo(144, 16, 192, 16, 192, 80);
         cloud.curveTo(240, 16, 304, 160, 192, 144);
@@ -324,9 +363,10 @@ public class PicnicScene extends JPanel {
         int width = getWidth();
         int height = getHeight();
         g2.setColor(new Color(139, 69, 19));
-        g2.fillRect(((width / 2) - 30)-300, (height / 2)-90, 65, height / 3);
+        g2.fillRect(((width / 2) - 30)-300, (height / 2)-90, 65, height / 3); //trunk
         g2.setColor(new Color(26, 139, 51));
         int radius = 70;
+        //tree leaves
         g2.fillOval(((width / 2) - radius)-300, ((height / 2) - (radius * 2))-90, radius * 2, radius * 2);
         g2.fillOval(((width / 2) - radius)-300, ((height / 2) - radius)-90, radius * 2, radius * 2);
         g2.fillOval(((width / 2) - (radius * 2)-300), ((height / 2) - radius)-90, radius * 2, radius * 2);
