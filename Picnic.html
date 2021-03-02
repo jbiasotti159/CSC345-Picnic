@@ -48,15 +48,16 @@
             drawTree();
             drawTree2();
             drawSeeSawBase();
-            
+            drawSeeSaw();
+            drawBlanket();
+            drawSeeSawPeople();
             {
                 graphics.save();
-
-                drawSeeSaw();
+                graphics.translate(700,0);
+                graphics.scale(-1,1);
+                drawSeeSawPeople();
                 graphics.restore();
             }
-            drawBlanket();
-            
             {
                 graphics.save();
                 var dx = (frameNumber + 10)*.05;
@@ -199,6 +200,23 @@
             graphics.lineTo(400,700);
             graphics.closePath();
             graphics.fill();
+            graphics.restore();
+        }
+        
+        function drawSeeSawPeople() {
+            graphics.save();
+            graphics.fillStyle = "white";
+            graphics.strokeStyle = "black";
+            graphics.fillOval(225, 550, 20, 20);
+            graphics.strokeOval(225, 550, 20, 20);
+            graphics.beginPath();
+            graphics.moveTo(225,570);
+            graphics.lineTo(225,625);
+            graphics.lineTo(250,660);
+            graphics.lineTo(210,700);
+            graphics.moveTo(225,600);
+            graphics.lineTo(250,625);
+            graphics.stroke();
             graphics.restore();
         }
 
